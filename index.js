@@ -18,7 +18,7 @@ app.use('/api/categories', require('./routes/categories'));
 app.use('/api/services', require('./routes/services'));
 app.use('/api/shifts', require('./routes/shifts'));
 app.use('/api/times', require('./routes/times'));
-app.use('/api/users', require('./routes/users'));
+// app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/dates', require('./routes/dates'));
 
