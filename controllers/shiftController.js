@@ -27,7 +27,7 @@ exports.getShiftsDate = async (req, res) => {
     const date = req.params.date;
     
     try {
-        const times = await Time.find();
+        const times = await Time.find().sort({position: 1});
         const shifts = await Shift.find({date});
 
         res.json({times, shifts});

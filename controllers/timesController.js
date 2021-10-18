@@ -2,7 +2,8 @@ const Time = require('../models/Time');
 
 exports.getTimes = async (req, res) => {
     try {
-        const times = await Time.find();
+        const times = await Time.find().sort({position: 1});
+        console.log(times);
         res.json({times});
     } catch (error) {
         console.log(error);

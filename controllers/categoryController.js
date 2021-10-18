@@ -5,7 +5,7 @@ exports.getCategories = async (req, res) => {
 
     try {
         const categories = await Category.find({enabled: true});
-        console.log(categories);
+        // console.log(categories);
         res.json({categories});
     } catch (error) {
         console.log(error);
