@@ -1,13 +1,25 @@
 const Shift = require('../models/Shift');
 const Time = require('../models/Time');
+
 exports.createShift = async (req, res) => {
+    
+    const shiftsDate = await Shift.find({date: req.body.date});
+
+    if(shiftsDate.map( s => s.timename).includes(req.body.timename)) {
+        return res.status(400).json({
+            msg: 'Este horario ya no está disponible, por favor selecciona nuevamente la fecha y el horario'
+        });
+    }
+
     try {
-        const shift = new Shift(req.body);
+        const shift = new Shift(req.body);  
+
         await shift.save();
         res.json({shift, msg: 'Turno creado correctamente'});
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Hubo un error');
+    } catch (error) { 
+        return res.status(500).json({
+            msg: 'Ocurrió un error al crear el turno, intente nuevamente'
+        })
     }
 }
 
@@ -27,7 +39,7 @@ exports.getShiftsDate = async (req, res) => {
     const date = req.params.date;
     
     try {
-        const times = await Time.find().sort({position: 1});
+        const times = await Time.find({ $or:[ {'enabled':"false"}, {'enabled':false} ]}).sort({position: 1});
         const shifts = await Shift.find({date});
 
         res.json({times, shifts});
